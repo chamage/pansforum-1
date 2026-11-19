@@ -1,6 +1,6 @@
 # PANS Forum — UI style guide
 
-**Kierunek:** minimalistyczny, desktop-first, charakter zbliżony do Threads (bez kopiowania interfejsu 1:1).
+**Kierunek:** minimalistyczny, desktop-first, charakter zbliżony do Threads.
 
 ## Zasady
 
@@ -11,7 +11,7 @@
 5. **Minimum objaśnień:** nie wstawiamy instrukcji do oczywistych operacji; dajemy czytelne ikony, krótkie nazwy i odpowiednie odstępy. Ikony mają aria-label.
 6. **Brak zbędnej dekoracji:** bez cieni, czerwonych kropek, stopki w strumieniu, wielokrotnych ramek i dużych bloków pomocniczego tekstu.
 7. **Dostępność:** widoczny focus-visible, etykiety pól formularzy, kontrast i stany błędów.
-8. **Optyczne wyrównanie:** text-box: trim-both cap alphabetic przez @supports tylko dla krótkich etykiet, z fallbackiem dla starszych przeglądarek.
+8. **Optyczne wyrównanie:** text-box: trim-both cap alphabetic przez @supports dla wszystkiego oprócz readable post-like content.
 
 ## Wspólne elementy i strony
 
@@ -21,10 +21,9 @@
 - templates/partials/post_card.html — wzorzec wpisu.
 - templates/partials/comment_item.html — wzorzec komentarza.
 - / — wzorzec tablicy; obecnie dane demonstracyjne, docelowo dane M2/M3.
-- /ui-components/ — osobna galeria formularzy, komentarzy i stanów.
 - Widoki podglądu działają tylko przy DEBUG=True.
 
-Każdy moduł M1–M6 korzysta z tych klas. Właściciel modułu robi własny ekran; kierownik zatwierdza zmiany we wspólnym layoucie i tokenach.
+Każdy moduł M1–M6 korzysta z tych klas. Właściciel modułu robi własny ekran; kierownik zatwierdza zmiany we wspólnym layoucie i tokenach potem w PR.
 
 ## Nawigacja i integracja
 
@@ -33,4 +32,3 @@ Każdy moduł M1–M6 korzysta z tych klas. Właściciel modułu robi własny ek
 - Kategoria przy wpisie ma neutralny styl pill.
 - Logowanie i rejestracja używają odrębnego układu accounts/auth_base.html.
 - / wyświetla dane demonstracyjne tylko w DEBUG=True. M3 podłączy prawdziwe posty, M2 kategorie.
-- Litera P to placeholder na logo SVG przygotowane przez kierownika.
