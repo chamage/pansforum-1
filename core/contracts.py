@@ -1,7 +1,7 @@
-"""Shared data references and module boundary contracts for PANS Forum.
+"""Shared data references and stable module-boundary contracts for PANS Forum.
 
-Frozen at ETAP 0 so modules M1-M6 can develop and test against stable interfaces.
-Changes to names or semantics require agreement across dependent modules.
+M1-M6 develop against these interfaces. Changes to names or semantics require
+approval from the project lead before dependent modules are updated.
 """
 
 from dataclasses import dataclass

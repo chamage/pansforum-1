@@ -30,10 +30,14 @@ Jeśli używasz Dockera do bazy:
 
 / jest wzorcem docelowej tablicy na danych demonstracyjnych. M2 i M3 mają podłączyć do istniejącego UI prawdziwe dane, bez przebudowy wspólnego layoutu.
 
-## Zasady pracy
+## Kontrakty i praca
 
-Przed pracą przeczytaj swój przydział w PLAN_UI_I_MODULOW_ZESPOL.md. Wygląd opisuje STYLE_GUIDE.md.
+Backendowe granice modułów są w core/contracts.py. Atrapy służą tylko do testów.
 
-Wspólne kontrakty są w core/contracts.py. Atrapy służą do testów; nie importujemy ich do kodu produkcyjnego.
+Ustalony kontrakt integracji UI:
+- M3: posts:post_detail → /posts/<post_id>/ → templates/posts/post_detail.html
+- M4: templates/comments/_list.html — kontekst: post, comments
+- M5: templates/votes/_controls.html — kontekst: target_type, target_id, score, user_vote
+- M6: templates/moderation/_report_action.html — kontekst: target_type, target_id
 
-Każdy pracuje na własnym branchu feature/mX-nazwa i wrzuca zmiany przez PR. Zmiany w templates/base.html, globalnym CSS, konfiguracji lub kontraktach najpierw uzgadniamy.
+Każdy pracuje na własnym branchu feature/mX-nazwa i wrzuca zmiany przez PR. Zmiany w templates/base.html, globalnym CSS, konfiguracji lub core/contracts.py uzgadniamy z kierownikiem.

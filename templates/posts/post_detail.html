@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{# M3 owns this page. Required context: post. #}
+{% block title %}{{ post.title }} — PANS Forum{% endblock %}
+{% block page_heading %}<h1 class="page-topbar__title">Post</h1>{% endblock %}
+{% block content %}
+  {# M3 renders the post body here. #}
+  {% include "votes/_controls.html" with target_type="post" target_id=post.id score=score user_vote=user_vote only %}
+  {% include "comments/_list.html" with post=post comments=comments only %}
+  {% include "moderation/_report_action.html" with target_type="post" target_id=post.id only %}
+{% endblock %}
