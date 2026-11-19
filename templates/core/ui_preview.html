@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}{{ selected_category.name }} — PANS Forum{% endblock %}
+{% block page_heading %}
+<h1 class="sr-only">Posty forum</h1>
+<details class="feed-picker" data-dropdown>
+  <summary class="feed-picker__trigger" aria-label="Wybierz kategorię">
+    <span class="button__label">{{ selected_category.name }}</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+  </summary>
+  <div class="feed-menu feed-picker__menu" aria-label="Kategorie">
+    <div class="feed-menu__search">
+      <label for="category-filter-input" class="sr-only">Filtruj kategorie</label>
+      <input
+        id="category-filter-input"
+        class="input feed-menu__input"
+        type="search"
+        placeholder="Filtruj kategorie…"
+        autocomplete="off"
+        data-category-filter
+      >
+    </div>
+    <div class="feed-menu__list" data-category-list>
+      {% for cat in demo_categories %}
+        <a href="/?category={{ cat.slug|urlencode }}&amp;sort={{ selected_sort }}{% if selected_sort == 'top' %}&amp;t={{ selected_period }}{% endif %}{% if show_search %}&amp;search=1&amp;q={{ search_query|urlencode }}{% endif %}"
+           class="feed-menu__item{% if cat.active %} feed-menu__item--active{% endif %}"
+           {% if cat.active %}aria-current="page"{% endif %}>{{ cat.name }}</a>
+      {% endfor %}
+    </div>
+    <p class="feed-menu__empty" data-category-empty hidden>Brak pasujących kategorii</p>
+  </div>
+</details>
+{% endblock %}
+{% block topbar_tools %}
+<details class="feed-sort" data-dropdown>
+  <summary class="feed-sort__trigger{% if selected_sort == 'top' %} feed-sort__trigger--active{% endif %}"
+           aria-label="Sortuj posty: {% if selected_sort == 'top' %}Najwyżej oceniane — {{ selected_period_label }}{% else %}Najnowsze{% endif %}"
+           title="Sortowanie{% if selected_sort == 'top' %}: Najwyżej oceniane — {{ selected_period_label }}{% endif %}">
+    <span class="feed-sort__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M7 12h10M10 17h4"/></svg>
+      {% if selected_sort == 'top' %}
+        <svg class="feed-sort__top-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3m-4 4 4-4 4 4"/></svg>
+      {% endif %}
+    </span>
+    {% if selected_sort == 'top' %}<span class="feed-sort__label">{{ selected_period_label }}</span>{% endif %}
+  </summary>
+  <div class="feed-menu feed-sort__menu" aria-label="Sortowanie">
+    <a class="feed-menu__item{% if selected_sort == 'recent' %} feed-menu__item--active{% endif %}"
+       href="/?category={{ selected_category.slug|urlencode }}&amp;sort=recent{% if show_search %}&amp;search=1&amp;q={{ search_query|urlencode }}{% endif %}"
+       {% if selected_sort == 'recent' %}aria-current="page"{% endif %}>Najnowsze</a>
+    <div class="feed-menu__divider" role="separator"></div>
+    <div class="feed-menu__label">Najwyżej oceniane</div>
+    {% for period in top_periods %}
+      <a class="feed-menu__item feed-menu__item--sub{% if selected_sort == 'top' and selected_period == period.slug %} feed-menu__item--active{% endif %}"
+         href="/?category={{ selected_category.slug|urlencode }}&amp;sort=top&amp;t={{ period.slug }}{% if show_search %}&amp;search=1&amp;q={{ search_query|urlencode }}{% endif %}"
+         {% if selected_sort == 'top' and selected_period == period.slug %}aria-current="page"{% endif %}>{{ period.label }}</a>
+    {% endfor %}
+  </div>
+</details>
+{% endblock %}
+{% block content %}
+  {% if show_search %}
+    <form method="get" action="/" class="feed-search" role="search">
+      <label for="feed-search-input" class="sr-only">Szukaj postów</label>
+      <input class="input" id="feed-search-input" type="search" name="q" placeholder="Szukaj postów"
+             value="{{ search_query }}" maxlength="100">
+      <input type="hidden" name="category" value="{{ selected_category.slug }}">
+      <input type="hidden" name="sort" value="{{ selected_sort }}">
+      {% if selected_sort == 'top' %}<input type="hidden" name="t" value="{{ selected_period }}">{% endif %}
+      <input type="hidden" name="search" value="1">
+      <button class="button button--primary" type="submit"><span class="button__label">Szukaj</span></button>
+    </form>
+  {% endif %}
+  <div class="composer">
+    <span class="avatar avatar--guest" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 21c.5-4.2 3.3-6.3 7.5-6.3s7 2.1 7.5 6.3"/></svg>
+    </span>
+    {% if user.is_authenticated %}
+      <span class="composer__prompt">Napisz post…</span>
+      <button class="button button--secondary composer__button" type="button" disabled title="Tworzenie postów będzie dostępne po integracji M3"><span class="button__label">Dodaj post</span></button>
+    {% else %}
+      <a class="composer__prompt" href="{% url 'accounts:login' %}?next=/">Napisz post…</a>
+      <a class="button button--secondary composer__button" href="{% url 'accounts:login' %}?next=/"><span class="button__label">Dodaj post</span></a>
+    {% endif %}
+  </div>
+  <div class="post-list">
+    {% for post in demo_posts %}
+      {% include "partials/post_card.html" with post=post %}
+    {% empty %}
+      <div class="empty-state"><p class="empty-state__title">Brak postów</p></div>
+    {% endfor %}
+  </div>
+{% endblock %}

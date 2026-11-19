@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Elementy UI — PANS Forum{% endblock %}
+{% block page_heading %}<h1 class="page-topbar__title">Elementy interfejsu</h1>{% endblock %}
+{% block content %}
+  <h2 class="section-title">Komentarze</h2>
+  <div class="thread-replies">
+    {% for comment in demo_comments %}
+      {% include "partials/comment_item.html" with comment=comment %}
+    {% endfor %}
+  </div>
+  <div class="form-page">
+    <h2 class="form-title">Formularz</h2>
+    <form class="form" action="" method="get">
+      <div class="message message--error" role="alert">Nieprawidłowy login lub hasło.</div>
+      <div class="form-field">
+        <label class="form-label" for="preview-username">Nazwa użytkownika</label>
+        <input class="input" id="preview-username" name="username" autocomplete="username" value="anna.kowalska">
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="preview-password">Hasło</label>
+        <input class="input" id="preview-password" type="password" autocomplete="current-password" aria-describedby="preview-password-error">
+        <p class="form-error" id="preview-password-error">To pole jest wymagane.</p>
+      </div>
+      <button type="button" class="button button--primary" disabled><span class="button__label">Zaloguj się</span></button>
+    </form>
+  </div>
+  <div class="empty-state">
+    <p class="empty-state__title">Brak postów</p>
+    <p class="empty-state__text">W tej kategorii nie ma jeszcze wpisów.</p>
+  </div>
+{% endblock %}

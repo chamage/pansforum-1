@@ -1,0 +1,24 @@
+<article class="comment-item">
+  <span class="avatar avatar--small" aria-hidden="true">{{ comment.author|slice:":1"|upper }}</span>
+  <div class="comment-item__content">
+    <header class="post-meta">
+      <strong class="post-meta__author">{{ comment.author }}</strong>
+      <span class="post-meta__muted">{{ comment.created_at_display }}</span>
+    </header>
+    <p class="comment-item__body">{{ comment.body }}</p>
+    <footer class="post-actions">
+      <span class="action-pair" role="group" aria-label="Ocena komentarza">
+        <button class="icon-button{% if comment.user_vote == 1 %} icon-button--active{% endif %}" type="button" disabled aria-label="Głos za komentarzem">
+          <svg viewBox="0 0 24 24" fill="{% if comment.user_vote == 1 %}currentColor{% else %}none{% endif %}" stroke="currentColor" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 12h4.7v8h6.6v-8H20L12 3Z"/></svg>
+        </button>
+        <span class="action-stat action-stat--strong">{{ comment.score }}</span>
+        <button class="icon-button{% if comment.user_vote == -1 %} icon-button--active{% endif %}" type="button" disabled aria-label="Głos przeciw komentarzowi">
+          <svg viewBox="0 0 24 24" fill="{% if comment.user_vote == -1 %}currentColor{% else %}none{% endif %}" stroke="currentColor" stroke-linejoin="round" aria-hidden="true"><path d="m12 21 8-9h-4.7V4H8.7v8H4l8 9Z"/></svg>
+        </button>
+      </span>
+      <button type="button" class="icon-button icon-button--muted" disabled aria-label="Zgłoś komentarz">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V3m0 2c5-3 9 3 14 0v11c-5 3-9-3-14 0"/></svg>
+      </button>
+    </footer>
+  </div>
+</article>

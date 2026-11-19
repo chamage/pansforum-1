@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Konto — PANS Forum{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body class="auth-body">
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <main id="main-content" class="auth-shell">
+    <section class="auth-card" aria-labelledby="auth-heading">
+      <div class="auth-card__header">
+        <a href="/" class="auth-back" aria-label="Powrót do forum" title="Powrót do forum">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6M8 12h13"/></svg>
+        </a>
+        <h1 id="auth-heading" class="auth-card__title">{% block auth_heading %}{% endblock %}</h1>
+        <span aria-hidden="true"></span>
+      </div>
+      {% block auth_content %}{% endblock %}
+    </section>
+  </main>
+</body>
+</html>

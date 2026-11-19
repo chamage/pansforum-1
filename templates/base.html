@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}PANS Forum{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <script src="{% static 'js/dropdowns.js' %}" defer></script>
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+<a class="skip-link" href="#main-content">Przejdź do treści</a>
+<aside class="app-rail" aria-label="Nawigacja">
+  <a class="rail-brand" href="/" aria-label="PANS Forum — strona główna">P</a>
+  <nav class="rail-nav" aria-label="Menu główne">
+    <a class="rail-link" href="/" aria-label="Tablica" title="Tablica" {% if preview_mode %}aria-current="page"{% endif %}>
+      <svg viewBox="0 0 24 24" fill="{% if preview_mode %}currentColor{% else %}none{% endif %}" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg>
+    </a>
+    <a class="rail-link" href="/?search=1" aria-label="Wyszukaj posty" title="Wyszukaj posty" {% if show_search %}aria-current="page"{% endif %}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.9"/><path d="m16 16 5 5"/></svg>
+    </a>
+    {% if user.is_authenticated %}
+      <a class="rail-link" href="{% url 'accounts:profile' %}" aria-label="Mój profil" title="Mój profil">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 21c.5-4.2 3.3-6.3 7.5-6.3s7 2.1 7.5 6.3"/></svg>
+      </a>
+    {% else %}
+      <a class="rail-link" href="{% url 'accounts:login' %}" aria-label="Zaloguj się" title="Zaloguj się">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 21c.5-4.2 3.3-6.3 7.5-6.3s7 2.1 7.5 6.3"/></svg>
+      </a>
+    {% endif %}
+  </nav>
+  <span class="rail-spacer"></span>
+</aside>
+
+<div class="app-main">
+  <header class="page-topbar">
+    <div class="page-topbar__center">{% block page_heading %}<h1 class="page-topbar__title">Wszystkie</h1>{% endblock %}</div>
+    <div class="page-topbar__tools">{% block topbar_tools %}{% endblock %}</div>
+    <div class="page-topbar__action">
+      {% block topbar_action %}
+      {% if user.is_authenticated %}
+        <a class="avatar avatar--header" href="{% url 'accounts:profile' %}" title="Twój profil" aria-label="Mój profil: {{ user.username }}">{{ user.username|slice:":1"|upper }}</a>
+      {% else %}
+        <a class="button button--primary button--small" href="{% url 'accounts:login' %}"><span class="button__label">Zaloguj się</span></a>
+      {% endif %}
+      {% endblock %}
+    </div>
+  </header>
+  <main id="main-content" class="content-surface">
+    {% if messages %}
+      <ul class="messages" aria-live="polite">
+        {% for message in messages %}
+          <li class="message{% if 'error' in message.tags %} message--error{% endif %}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+</body>
+</html>

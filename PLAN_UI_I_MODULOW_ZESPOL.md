@@ -4,15 +4,14 @@
 
 **Architektura z aktualnej dokumentacji:** Django + PostgreSQL + Django Templates (MPA), z jednym repozytorium i wspólnymi stylami. Przejście na React SPA byłoby osobną decyzją wymagającą aktualizacji architektury, kontraktów HTTP i dokumentacji.
 
-## 0. Najpierw wspólny szkielet (kierownik)
+## 0. Punkt startowy
 
-1. Utwórz wspólne repozytorium i minimalny projekt Django. Zachowaj dotychczasowy prototyp jako materiał referencyjny; nie przenoś hurtowo dodatkowych funkcji.
-2. Przygotuj `config/`, aplikacje `accounts/`, `categories/`, `posts/`, `comments/`, `votes/`, `moderation/`, wspólne `templates/base.html`, `templates/partials/`, `static/css/tokens.css` i `static/css/base.css`.
-3. Ustal routing, sposób uwierzytelniania, nazwy widoków, modele wymagane przez pozostałych oraz kontrakty dla fragmentów szablonów. Ustal jedną komendę uruchomienia i jedną komendę testów; projekt ma startować po świeżym sklonowaniu.
-4. Zrób **wzorcowy ekran tablicy `/ui-preview/`**, **przykład formularza logowania** oraz pojedynczy wzorzec `post_card`. Dopuszczalne dane demonstracyjne; nie trzeba teraz implementować logiki wszystkich elementów.
-5. Zapisz reguły w `UI_STYLE_GUIDE.md` i udostępnij działającą gałąź `main` przed startem równoległych prac. Wzorcowa tablica to `/ui-preview/` ze statycznymi danymi, nie produkcyjny feed M3. Szczegóły inicjalizacji są w `HANDOFF.md`.
+Wspólny szkielet, M1 oraz wzorzec UI są gotowe na main.
 
-**Własność plików:** `base.html`, `tokens.css`, `base.css`, konfiguracja i główny routing — wyłącznie po uzgodnieniu z kierownikiem. Każdy właściciel edytuje głównie pliki swojego modułu. Wspólny styl to źródło prawdy, nie sześć niezależnych CSS-ów.
+- / jest wzorcem tablicy. M2 podłącza prawdziwe kategorie, M3 prawdziwe posty, wyszukiwanie i sortowanie.
+- base.html, tokens.css, base.css, konfiguracja i core/contracts.py są współdzielone — zmiany tylko po uzgodnieniu z kierownikiem.
+- Każdy rozwija przede wszystkim własny moduł i jego UI.
+- Nie dodajemy Reacta ani drugiego systemu stylów.
 
 ## 1. Zadania dla sześciu osób
 
@@ -71,3 +70,8 @@ Na początek formularze HTML + POST i przekierowanie po zapisie. JavaScript tylk
 - Korzysta z tokenów i istniejących wzorców UI; nie wprowadza nowej palety ani nie dubluje `base.html`.
 - Ma test poprawnej ścieżki, uprawnień i ważnego błędu; brak atrap w kodzie uruchamianym produkcyjnie.
 - Osoba odpowiedzialna potrafi wyjaśnić modele, przepływ żądania, walidację i testy.
+
+
+## Dodatkowy kontrakt UI
+
+M2: zasilić selektor kategorii prawdziwymi danymi. M3: zastąpić demonstracyjny widok core.views.home prawdziwymi postami i obsłużyć parametry GET category, sort=recent|top i q. Jedyny punkt dodawania postu pozostaje nad strumieniem. Nie implementować personalizacji „Dla Ciebie”. Kierownik utrzymuje wspólny layout.

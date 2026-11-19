@@ -1,29 +1,36 @@
-# Forum — UI style guide
+# PANS Forum — UI style guide
 
-**Kierunek:** spokojny, minimalistyczny interfejs inspirowany Threads. Desktop-first, responsywny. Dużo czytelnej treści, mało dekoracji. Inspiracja wizualna nie oznacza kopiowania interfejsu 1:1.
+**Kierunek:** minimalistyczny, desktop-first, charakter zbliżony do Threads (bez kopiowania interfejsu 1:1).
 
 ## Zasady
 
-1. **Monochromatycznie.** Biel, niemal czerń, 2–3 odcienie szarości. Czerwień uczelni jako rzadki akcent (orientacyjnie 1–5% widoku), nie stały kolor wszystkich przycisków. Dokładny odcień do zatwierdzenia.
-2. **Bez cieni.** Unikaj ramek wokół każdej sekcji i kart w kartach. Hierarchię buduj odstępami, tłem i dyskretnymi separatorami. Obramowania stosuj, gdy mają funkcję (pola formularzy, aktywny fokus).
-3. **Typografia.** 14 px — standardowe elementy UI; 16 px — treść postów i komentarzy; 13 px — wyjątkowo metadane; 20–24 px — nagłówki. Nie schodź poniżej 13 px. W treściach używaj komfortowej interlinii (ok. 1.5).
-4. **Gęstość pośrednia.** Ani mikroskopijne kontrolki, ani ogromne karty. Bazowe odstępy: 4 / 8 / 12 / 16 / 24 px. Główny strumień postów powinien mieć ograniczoną szerokość (około 680–760 px).
-5. **Mniej tekstu pomocniczego.** Pisz etykiety i opisy tylko wtedy, gdy pomagają podjąć decyzję albo uniknąć błędu. Nie objaśniaj oczywistych działań. Ikony stosuj dla rozpoznawalnych operacji; niejednoznaczne ikony uzupełniaj tekstem lub podpowiedzią.
-6. **Spójność ponad indywidualność.** Wspólne fonty, kolory, odstępy, komponenty, stany przycisków i formularzy. Każdy ekran musi wyglądać jak część tej samej aplikacji.
-7. **Dostępność bez wizualnego hałasu.** Zachowaj widoczny fokus klawiatury, odpowiedni kontrast, komunikaty błędów oraz dostępne nazwy ikon (`aria-label`). Pola formularzy mają prawdziwe etykiety; placeholder ich nie zastępuje.
+1. **Dwa tła:** jasnoszare tło aplikacji i biała powierzchnia strumienia. Separatory zamiast cieni i kart w kartach.
+2. **Oszczędny kolor:** niemal czerń, biel i szarości. Czerwień #9e1b32 tylko do ważnych aktywnych stanów lub błędów.
+3. **Tekst:** 14 px w UI i metadanych, 16 px w treści, 18 px dla tytułu posta, 24 px dla nagłówków formularza. Nie używamy fontów 13 px.
+4. **Kontrolki:** przyciski i pola około 42 px wysokości, klikalne ikony około 42 × 42 px. Duże odstępy między postami, mniejsze między powiązanymi informacjami.
+5. **Minimum objaśnień:** nie wstawiamy instrukcji do oczywistych operacji; dajemy czytelne ikony, krótkie nazwy i odpowiednie odstępy. Ikony mają aria-label.
+6. **Brak zbędnej dekoracji:** bez cieni, czerwonych kropek, stopki w strumieniu, wielokrotnych ramek i dużych bloków pomocniczego tekstu.
+7. **Dostępność:** widoczny focus-visible, etykiety pól formularzy, kontrast i stany błędów.
+8. **Optyczne wyrównanie:** text-box: trim-both cap alphabetic przez @supports tylko dla krótkich etykiet, z fallbackiem dla starszych przeglądarek.
 
-## Wspólne elementy
+## Wspólne elementy i strony
 
-- `base.html` — układ, nagłówek i nawigacja.
-- `post_card` — wzorzec pojedynczego posta na liście.
-- `button`, `icon_button`, `input`, `textarea` — wspólne stany i wymiary.
-- `empty_state`, `error_message` — krótkie, rzeczowe komunikaty.
-- `vote_controls`, `comment_list`, `report_action` — fragmenty osadzane przez właścicieli modułów.
+- static/css/tokens.css — źródło kolorów, odstępów i rozmiarów.
+- static/css/base.css — wspólny layout i klasy komponentów.
+- templates/base.html — boczna nawigacja, powierzchnia strony i nagłówek.
+- templates/partials/post_card.html — wzorzec wpisu.
+- templates/partials/comment_item.html — wzorzec komentarza.
+- / — wzorzec tablicy; obecnie dane demonstracyjne, docelowo dane M2/M3.
+- /ui-components/ — osobna galeria formularzy, komentarzy i stanów.
+- Widoki podglądu działają tylko przy DEBUG=True.
 
-## Reguła przed dodaniem elementu
+Każdy moduł M1–M6 korzysta z tych klas. Właściciel modułu robi własny ekran; kierownik zatwierdza zmiany we wspólnym layoucie i tokenach.
 
-**Czy to potrzebne, czytelne i zgodne z istniejącym wzorcem?** Jeśli nie — usuń lub uprość. Nie dodawaj opisu tylko po to, by wypełnić przestrzeń.
+## Nawigacja i integracja
 
-## Źródło prawdy
-
-Wspólne wartości kolorów, typografii i odstępów trzymamy w `static/css/tokens.css`, a reguły ogólne w `static/css/base.css`. Nowe ekrany korzystają z nich, bez własnych palet i bibliotek UI.
+- Sidebar wyśrodkowany w pionie: tablica, wyszukiwanie, profil. Bez osobnej ikony dodawania postu.
+- Nagłówek strumienia wybiera kategorię; obok sortowanie „Najnowsze” / „Najlepiej oceniane”.
+- Kategoria przy wpisie ma neutralny styl pill.
+- Logowanie i rejestracja używają odrębnego układu accounts/auth_base.html.
+- / wyświetla dane demonstracyjne tylko w DEBUG=True. M3 podłączy prawdziwe posty, M2 kategorie.
+- Litera P to placeholder na logo SVG przygotowane przez kierownika.

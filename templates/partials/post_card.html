@@ -1,0 +1,39 @@
+<article class="post-card">
+  <div class="post-card__main">
+    <header class="post-meta">
+      <strong class="post-meta__author">{{ post.author }}</strong>
+      <span class="post-meta__muted">{% if post.created_at_display %}{{ post.created_at_display }}{% else %}{{ post.created_at }}{% endif %}</span>
+      <span class="post-meta__category">{{ post.category }}</span>
+      <span class="post-meta__menu">
+        <button type="button" class="icon-button icon-button--muted icon-button--compact" disabled aria-label="Więcej akcji — dostępne po integracji">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+        </button>
+      </span>
+    </header>
+    <h2 class="post-title">{{ post.title }}</h2>
+    <p class="post-body">{{ post.body }}</p>
+    <footer class="post-actions">
+      <div class="post-actions__group">
+        <span class="action-pair" role="group" aria-label="Ocena posta">
+          <button class="icon-button{% if post.user_vote == 1 %} icon-button--active{% endif %}" type="button" disabled aria-label="Głos za">
+            <svg viewBox="0 0 24 24" fill="{% if post.user_vote == 1 %}currentColor{% else %}none{% endif %}" stroke="currentColor" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 12h4.7v8h6.6v-8H20L12 3Z"/></svg>
+          </button>
+          <span class="action-stat action-stat--strong">{{ post.score }}</span>
+          <button class="icon-button{% if post.user_vote == -1 %} icon-button--active{% endif %}" type="button" disabled aria-label="Głos przeciw">
+            <svg viewBox="0 0 24 24" fill="{% if post.user_vote == -1 %}currentColor{% else %}none{% endif %}" stroke="currentColor" stroke-linejoin="round" aria-hidden="true"><path d="m12 21 8-9h-4.7V4H8.7v8H4l8 9Z"/></svg>
+          </button>
+        </span>
+        <span class="action-separator" aria-hidden="true"></span>
+        <span class="action-pair">
+          <button type="button" class="icon-button" disabled aria-label="Komentarze">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.4c0 4.9-3.7 8.1-8.3 8.1-1.2 0-2.3-.2-3.3-.6L4 20l1.2-4.2A7.6 7.6 0 0 1 3.7 11.4c0-4.5 3.6-7.8 8.3-7.8s8 3.3 8 7.8Z"/></svg>
+          </button>
+          <span class="action-stat">{{ post.comments_count|default:0 }}</span>
+        </span>
+      </div>
+      <button type="button" class="icon-button icon-button--muted" disabled aria-label="Zgłoś post">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V3m0 2c5-3 9 3 14 0v11c-5 3-9-3-14 0"/></svg>
+      </button>
+    </footer>
+  </div>
+</article>
