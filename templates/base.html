@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}PANS Forum{% endblock %}</title>
+  <link rel="icon" type="image/svg+xml" href="{% static 'img/logo.svg' %}">
   <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <script src="{% static 'js/dropdowns.js' %}" defer></script>
@@ -13,6 +14,9 @@
 <body>
 <a class="skip-link" href="#main-content">Przejdź do treści</a>
 <aside class="app-rail" aria-label="Nawigacja">
+  <a class="rail-brand" href="/" aria-label="PANS Forum" title="PANS Forum">
+    <img src="{% static 'img/logo.svg' %}" alt="" width="27" height="29" aria-hidden="true">
+  </a>
   <nav class="rail-nav" aria-label="Menu główne">
     <a class="rail-link" href="/" aria-label="Tablica" title="Tablica" {% if preview_mode %}aria-current="page"{% endif %}>
       <svg viewBox="0 0 24 24" fill="{% if preview_mode %}currentColor{% else %}none{% endif %}" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg>
